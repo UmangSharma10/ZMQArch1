@@ -1,0 +1,23 @@
+import org.zeromq.SocketType;
+import org.zeromq.ZContext;
+import org.zeromq.ZMQ;
+
+public class ZmqSub2 {
+    public static void main(String[] args) {
+        try(ZContext context = new ZContext()){
+            ZMQ.Socket socket = context.createSocket(SocketType.SUB);
+            socket.connect("tcp://127.0.0.1:5555");
+
+            socket.subscribe("AAB");
+            while (true) {
+                String response = socket.recvStr();
+                System.out.println("Server " + response);
+            }
+
+
+
+        }catch (Exception e){
+            System.out.println(e);
+        }
+    }
+}
